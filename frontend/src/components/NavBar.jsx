@@ -1,19 +1,28 @@
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { MdOutlineLightMode } from "react-icons/md";
-import { MdOutlineDarkMode } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 import Logo from "./Logo";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const navigator = useNavigate();
 
-  function handleClick() {
+
+  function toggleTheme() {
     if (theme === "dark") {
       setTheme("light");
     } else {
       setTheme("dark");
     }
   }
+
+  function handleClick() {
+    navigator("/signin")
+  }
+
   return (
     // <header
     //   className={`w-[100%] h-[4em] flex justify-center items-center ${
@@ -59,20 +68,22 @@ const NavBar = () => {
       >
         <Logo />
         <div className="flex justify-center items-center">
-          <div className="lg:flex lg:flex-1 lg:justify-end">
-            <a
-              href="/signin"
-              className="text-sm font-semibold leading-6 text-text-color border py-2 px-4 rounded-md hover:text-button-hover"
-            >
-              Log in
-            </a>
-          </div>
-          <button
+          <Button
+            title="Log in"
+            classname="!text-sm font-semibold leading-6"
+            onclick={handleClick}
+          />
+          <Button
+            title={theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
+            classname={`ml-1 md:ml-4 p-2 text-[1.4rem] md:text-[1.5rem] flex !bg-transparent !shadow-none transition ease-in-out delay-150 ${theme === "dark" ? "!text-text-color-dark" : "!text-text-color-light"}`}
+            onclick={toggleTheme}
+          />
+          {/* <button
             className={`ml-4 p-2 text-xl flex ${theme === "dark" ? "text-text-color-dark" : "text-text-color-light"}`}
-            onClick={handleClick}
+            onClick={toggleTheme}
           >
             {theme === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
-          </button>
+          </button> */}
         </div>
       </nav>
     </header>

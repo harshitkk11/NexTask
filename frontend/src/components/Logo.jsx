@@ -14,22 +14,23 @@ const Logo = () => {
   }, [theme]);
 
   return (
-    <a href="/" className="w-auto flex justify-center items-center gap-0.5">
-      <span className="flex justify-center items-center text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark tracking-wide">
+    <a href="/" className="w-auto flex justify-center items-center gap-0.5 ">
+      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark tracking-wide">
         NexTask
       </span>
-      <span className="flex justify-center items-center text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark">
+      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark">
         |
       </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 88.92041352883678 95.481"
-        height="30"
-        width="25"
+        // height="30"
+        // width="25"
         data-background-color="#ffffff"
         preserveAspectRatio="xMidYMid meet"
         id="tight-bounds"
+        className="w-[1.4rem] md:w-[1.5rem]"
       >
         <g>
           <svg
@@ -65,16 +66,16 @@ const Logo = () => {
                             <g>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
                                 version="1.1"
                                 x="0"
                                 y="0"
                                 viewBox="8.571000099182129 3.3509979248046875 86.28300476074219 92.64900207519531"
-                                enable-background="new 0 0 100 100"
-                                xml:space="preserve"
+                                enableBackground="new 0 0 100 100"
+                                xmlSpace="preserve"
                                 height="95.481"
                                 width="88.92041352883678"
-                                class="icon-icon-0"
+                                className="icon-icon-0"
                                 data-fill-palette-color="accent"
                                 id="icon-0"
                                 fill="#000000"

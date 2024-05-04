@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 
-const darkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+// const darkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 if (!("theme" in localStorage)) {
-  if (darkScheme) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
+  // if (darkScheme) {
+  // localStorage.setItem("theme", "dark");
+  // } else {
+  localStorage.setItem("theme", "light");
+  // }
 }
 
 export const ThemeContext = createContext({});
