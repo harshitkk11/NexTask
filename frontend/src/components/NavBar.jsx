@@ -1,7 +1,19 @@
-import Logo1 from "../assets/image/logo4.svg";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { MdOutlineLightMode } from "react-icons/md";
+import { MdOutlineDarkMode } from "react-icons/md";
+import Logo from "./Logo";
 
-const NavBar = ({ isLoggedIn }) => {
+const NavBar = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
 
+  function handleClick() {
+    if (theme === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  }
   return (
     // <header
     //   className={`w-[100%] h-[4em] flex justify-center items-center ${
@@ -45,21 +57,22 @@ const NavBar = ({ isLoggedIn }) => {
         className="flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5 flex flex-row justify-center items-center gap-x-0.5">
-            <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-              NexTask
-            </span>
-            <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-              |
-            </span>
-            <img className="h-6 w-auto" src={Logo1} alt="Website Logo" />
-          </a>
-        </div>
-        <div className="lg:flex lg:flex-1 lg:justify-end">
-          <a href="/signin" className="text-sm font-semibold leading-6 text-text-color border py-2 px-4 rounded-md hover:text-button-hover">
-            Log in
-          </a>
+        <Logo />
+        <div className="flex justify-center items-center">
+          <div className="lg:flex lg:flex-1 lg:justify-end">
+            <a
+              href="/signin"
+              className="text-sm font-semibold leading-6 text-text-color border py-2 px-4 rounded-md hover:text-button-hover"
+            >
+              Log in
+            </a>
+          </div>
+          <button
+            className={`ml-4 p-2 text-xl flex ${theme === "dark" ? "text-text-color-dark" : "text-text-color-light"}`}
+            onClick={handleClick}
+          >
+            {theme === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
+          </button>
         </div>
       </nav>
     </header>

@@ -14,7 +14,7 @@ const Logo = () => {
   }, [theme]);
 
   return (
-    <div className="w-auto flex justify-center items-center gap-0.5">
+    <a href="/" className="w-auto flex justify-center items-center gap-0.5">
       <span className="flex justify-center items-center text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark tracking-wide">
         NexTask
       </span>
@@ -145,7 +145,7 @@ const Logo = () => {
         </span>
         <img className="h-6 w-auto" src={LogoImg} alt="Website Logo" />
       </a> */}
-    </div>
+    </a>
   );
 };
 

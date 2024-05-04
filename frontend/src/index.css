@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: nextask-regular;
-  src: url(/nextask-hind-regular.ttf);
+  font-family: 'Hind';
+  src: url('Hind-Regular.woff2') format('woff2'),
+      url('Hind-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 html {

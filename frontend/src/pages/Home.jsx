@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 const Home = () => {
   return (
     <div className="bg-white">
@@ -25,6 +27,7 @@ const Home = () => {
               workflow, boost productivity, and help you achieve your goals with
               ease.
             </p>
+            <Button title="Get Started" />
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="/signup"

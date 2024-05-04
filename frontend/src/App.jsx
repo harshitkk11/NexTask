@@ -3,22 +3,26 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import NavBar from "./components/NavBar";
-import Footer from "./components/Footer"
-import { useEffect, useState } from "react";
+import Footer from "./components/Footer";
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "./contexts/ThemeContext";
 
 function App() {
   const currentPath = window.location.pathname; // change this with user login status
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {theme, setTheme} = useContext(ThemeContext);
 
   useEffect(() => {
     if (currentPath !== "/") {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
   }, [currentPath]);
 
   return (
     <div className="w-[100%] h-[100vh]">
-      <NavBar isLoggedIn={isLoggedIn} />
+      {!isLoggedIn && <NavBar />}
       <div className="pages">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -26,7 +30,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
         </Routes>
       </div>
-      <Footer/>
+      {!isLoggedIn && <Footer />}
     </div>
   );
 }
