@@ -1,5 +1,7 @@
 import { useState } from "react";
-// import Logo from "../assets/image/logo4.svg";
+import Logo from "../components/Logo";
+import InputField from "../components/InputField";
+import Button from "../components/Button";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -9,122 +11,157 @@ const Signup = () => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [submit, setSubmit] = useState("Sign Up");
+  const specialChars = /[ @!#$%^&*()+=_,.`~-]/;
+
   const onChangeInput = (e) => {
     const { name, value } = e.target;
 
     setFormData({ ...formData, [name]: value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setSubmit("Please wait...");
+    setIsDisabled(true);
+    console.log(formData);
+    setFormData({
+      name: "",
+      username: "",
+      email: "",
+      password: "",
+    });
+    setSubmit("Sign Up");
+    setIsDisabled(false);
+  };
+
+  const onValidate = (e) => {
+    e.preventDefault();
+
+    if (formData.name.length < 3) {
+      setErrors({
+        name: "Please enter your name.",
+        username: "",
+        email: "",
+        password: "",
+      });
+    } else if (formData.username.length === 0) {
+      setErrors({
+        name: "",
+        username: "Please enter a username.",
+        email: "",
+        password: "",
+      });
+    } else if (specialChars.test(formData.username)) {
+      setErrors({
+        name: "",
+        username: "Please enter a valid username.",
+        email: "",
+        password: "",
+      });
+    } else if (formData.email.length === 0) {
+      setErrors({
+        name: "",
+        username: "",
+        email: "Please enter a valid email address.",
+        password: "",
+      });
+    } else if (formData.password.length < 8) {
+      setErrors({
+        name: "",
+        username: "",
+        email: "",
+        password:
+          "Password length is too short. (Password length should be of atleast 8 characters)",
+      });
+    } else {
+      setErrors({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+      });
+
+      onSubmit(e);
+    }
+  };
+
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-[100vh] flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <a
-          href="/"
-          className="-m-1.5 p-1.5 flex flex-row justify-center items-center gap-x-0.5"
-        >
-          <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-            NexTask
-          </span>
-          <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-            |
-          </span>
-          {/* <img className="h-6 w-auto" src={Logo} alt="Website Logo" /> */}
-        </a>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-text-color">
+        <Logo />
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-text-color-light dark:text-text-color-dark">
           Create your account
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium leading-6 text-text-color"
-            >
-              Name
-            </label>
-            <div className="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={(e) => onChangeInput(e)}
-                autoComplete="name"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-text-color shadow-sm ring-1 ring-inset ring-text-color placeholder:text-text-color sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-text-color"
-            >
-              Username
-            </label>
-            <div className="mt-2">
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={(e) => onChangeInput(e)}
-                autoComplete="username"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-text-color shadow-sm ring-1 ring-inset ring-text-color placeholder:text-text-color sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => onChangeInput(e)}
-                autoComplete="email"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Password
-            </label>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => onChangeInput(e)}
-                autoComplete="password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-button-bg px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-button-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-hover"
-            >
-              Sign in
-            </button>
-          </div>
+        <form className="space-y-6" onSubmit={onValidate}>
+          <InputField
+            label="Name"
+            type="text"
+            name="name"
+            autocomplete="name"
+            placeholder="Name"
+            onchange={(e) => onChangeInput(e)}
+            value={formData.name}
+            disable={isDisabled}
+            error={errors.name}
+          />
+
+          <InputField
+            label="Username"
+            type="text"
+            name="username"
+            autocomplete="username"
+            placeholder="Username"
+            onchange={(e) => onChangeInput(e)}
+            value={formData.username}
+            disable={isDisabled}
+            error={errors.username}
+          />
+
+          <InputField
+            label="Email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="Email"
+            onchange={(e) => onChangeInput(e)}
+            value={formData.email}
+            disable={isDisabled}
+            error={errors.email}
+          />
+
+          <InputField
+            label="Password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            onchange={(e) => onChangeInput(e)}
+            value={formData.password}
+            disable={isDisabled}
+            error={errors.password}
+          />
+
+          <Button title={submit} classname="w-[100%] !mt-16 rounded-lg" />
         </form>
+        <p className="mt-10 flex items-center justify-center gap-2 text-lg text-text-color-light dark:text-text-color-dark">
+          Already have an account?{" "}
+          <a
+            href="/signin"
+            className="text-link-color-light hover:text-link-hover-light dark:text-link-color-dark hover:dark:text-link-hover-dark"
+          >
+            Sign in
+          </a>
+        </p>
       </div>
     </div>
   );

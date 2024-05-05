@@ -6,6 +6,7 @@ const Home = () => {
 
   const handleClick = () => {
     navigator("/signup");
+    window.location.reload();
   };
 
   return (

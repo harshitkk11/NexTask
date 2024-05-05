@@ -89,6 +89,15 @@ export default {
         dark: "#ff5050",
       },
 
+      "highlight": {
+        light: "#ffcc00",
+        dark: "#ffcc66",
+      },
+
+      "signup-screen": {
+        light: "#dfcfb9",
+        dark: "#ffcc66",
+      },
     },
     fontFamily: {
       inter: ["Inter", 'sans-serif'],
