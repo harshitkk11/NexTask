@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
-
-const Button = ({ title, classname = "", onclick }) => {
-  const { theme } = useContext(ThemeContext);
+const Button = ({ title = "", classname = "", onclick }) => {
 
   return (
     <button

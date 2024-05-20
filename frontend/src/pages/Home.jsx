@@ -2,11 +2,10 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigator("/signup");
-    window.location.reload();
+    navigate("/signup");
   };
 
   return (

@@ -61,7 +61,7 @@ const NavBar = () => {
     //     {isLoggedIn ? <Button title="Log out" /> : <Button title="Log in" />}
     //   </nav>
     // </header>
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className="bg-navbar-background-light dark:bg-navbar-background-dark text-navbar-text-light dark:text-navbar-text-dark">
       <nav
         className="flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"

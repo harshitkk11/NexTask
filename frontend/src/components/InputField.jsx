@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-
 const InputField = ({
-  label,
-  type,
-  name,
+  label = "",
+  type = "",
+  name = "",
   autocomplete,
-  placeholder,
+  placeholder = "",
   onchange,
   value,
   disable,
@@ -24,7 +22,7 @@ const InputField = ({
           type={type}
           id={label}
           name={name}
-          className={`block w-full rounded-lg border border-input-text-light bg-input-background-light px-4 py-3 text-sm text-input-text-light outline-1 outline-button-hover-light dark:border-input-text-dark dark:bg-input-background-dark dark:text-input-text-dark dark:outline-button-hover-dark ${error && "border-error-light dark:border-error-dark"}`}
+          className={`block w-full rounded-lg border bg-input-background-light px-4 py-3 text-sm text-input-text-light outline-1 outline-button-hover-light dark:bg-input-background-dark dark:text-input-text-dark dark:outline-button-hover-dark ${error ? "border-error-light dark:border-error-dark": "border-input-text-light dark:border-input-text-dark"}`}
           required=""
           aria-describedby={label}
           autoComplete={autocomplete}

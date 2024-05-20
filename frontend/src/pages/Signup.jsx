@@ -1,7 +1,11 @@
 import { useState } from "react";
+import axios from "axios";
 import Logo from "../components/Logo";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { toast } from "react-toastify";
+
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -28,17 +32,51 @@ const Signup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setSubmit("Please wait...");
     setIsDisabled(true);
-    console.log(formData);
-    setFormData({
-      name: "",
-      username: "",
-      email: "",
-      password: "",
-    });
+
+    try {
+      const response = await axios.post("/signup", formData);
+      const res = response.data;
+
+      if (res && !res.error) {
+        if (res.message === "Signed up successfully") {
+          toast.success(
+            "Thank you for registering. Please check your inbox for a verification email to confirm your email address.",
+          );
+          setFormData({
+            name: "",
+            username: "",
+            email: "",
+            password: "",
+          });
+        } else if (res.message === "Username already exist") {
+          setErrors({
+            name: "",
+            username: "Username already exist",
+            email: "",
+            password: "",
+          });
+        } else if (res.message === "Email already exist") {
+          setErrors({
+            name: "",
+            username: "",
+            email: "Email already exist",
+            password: "",
+          });
+        } else {
+          toast(res.message);
+        }
+      }
+      else{
+        throw new Error(res.error);
+      }
+    } catch (error) {
+      toast.error("Something went wrong!!");
+    }
+
     setSubmit("Sign Up");
     setIsDisabled(false);
   };
@@ -95,14 +133,17 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-[100vh] flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex min-h-[100vh] flex-1 flex-col items-center justify-center px-6 py-12 lg:px-8">
+      <div className="flex flex-col items-center justify-center sm:mx-auto sm:w-full sm:max-w-sm">
         <Logo />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-text-color-light dark:text-text-color-dark">
           Create your account
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        {/* <p className={`mt-1 text-base text-error-light dark:text-error-dark`}>
+          {error}
+        </p> */}
         <form className="space-y-6" onSubmit={onValidate}>
           <InputField
             label="Name"

@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useNavigate } from "react-router-dom"
 
 const Logo = () => {
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const [color, setColor] = useState("#333333");
 
@@ -14,7 +16,7 @@ const Logo = () => {
   }, [theme]);
 
   return (
-    <a href="/" className="w-auto flex justify-center items-center gap-0.5 ">
+    <button className="w-auto flex justify-center items-center gap-0.5 " onClick={() => navigate("/")}>
       <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark tracking-wide">
         NexTask
       </span>
@@ -134,19 +136,7 @@ const Logo = () => {
         </g>
         <defs />
       </svg>
-      {/* <a
-        href="/"
-        className="-m-1.5 p-1.5 flex flex-row justify-center items-center gap-x-0.5"
-      >
-        <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-          NexTask
-        </span>
-        <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-          |
-        </span>
-        <img className="h-6 w-auto" src={LogoImg} alt="Website Logo" />
-      </a> */}
-    </a>
+    </button>
   );
 };
 
