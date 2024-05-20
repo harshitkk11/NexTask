@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/UserRoutes')
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
