@@ -1,4 +1,4 @@
-const User = require("../models/UserModel");
+const User = require("../../models/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { transporter, mailGenerator } = require("./MailController");
@@ -15,10 +15,10 @@ const ResetMail = async (req, res, next) => {
                 return
             }
             
-            return res.status(200).json({ message: "This email address is not verified" });
+            return res.status(200).json({ error: "This email address is not verified" });
         }
 
-        return res.status(200).json({ message: "This email address is not registered" });
+        return res.status(200).json({ error: "This email address is not registered" });
 
     } catch (error) {
         return res.status(400).json({ error });
@@ -77,13 +77,13 @@ const ResetMailer = async (req, res) => {
 };
 
 const ResetPass = async (req, res) => {
-    const { password, t } = req.body;
+    const { password, token } = req.body;
 
-    if (!t) {
+    if (!token) {
         return res.status(400).json({ error: "Token not found" });
     }
 
-    jwt.verify(String(t), process.env.JWT_SECRET_KEY, async (err, user) => {
+    jwt.verify(String(token), process.env.JWT_SECRET_KEY, async (err, user) => {
         if (err) {
             return res.status(400).json({ error: "Invalid Token" });
         }
@@ -97,7 +97,7 @@ const ResetPass = async (req, res) => {
             );
 
             if (reset) {
-                return res.status(200).json({ message: "Password reset" });
+                return res.status(200).json({ message: "Password reset Successfully." });
             } else {
                 return res.status(400).json({ error: "Something went wrong" });
             }

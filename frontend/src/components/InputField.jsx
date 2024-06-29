@@ -2,7 +2,7 @@ const InputField = ({
   label = "",
   type = "",
   name = "",
-  autocomplete,
+  autocomplete="",
   placeholder = "",
   onchange,
   value,

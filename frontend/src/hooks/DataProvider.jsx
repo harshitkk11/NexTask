@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useContext, createContext, useState, useEffect } from "react";
 
-const baseURL = import.meta.env.VITE_SERVER_URL;
-
 export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
@@ -11,7 +9,6 @@ const DataProvider = ({ children }) => {
     name: "",
     username: "",
     email: "",
-    id: "",
   });
 
   useEffect(() => {
@@ -25,7 +22,7 @@ const DataProvider = ({ children }) => {
               name: res.name,
               username: res.username,
               email: res.email,
-              id: res.__id,
+              // id: res._id,
             });
           }
         } catch (err) {

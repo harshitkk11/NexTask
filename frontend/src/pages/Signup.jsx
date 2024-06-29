@@ -2,10 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import Logo from "../components/Logo";
 import InputField from "../components/InputField";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import { toast } from "react-toastify";
-
-const baseURL = import.meta.env.VITE_SERVER_URL;
+import { Spinner } from "flowbite-react";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +33,7 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmit("Please wait...");
+    setSubmit(<Spinner aria-label="Please wait" />);
     setIsDisabled(true);
 
     try {
@@ -69,8 +68,7 @@ const Signup = () => {
         } else {
           toast(res.message);
         }
-      }
-      else{
+      } else {
         throw new Error(res.error);
       }
     } catch (error) {
@@ -192,7 +190,7 @@ const Signup = () => {
             error={errors.password}
           />
 
-          <Button title={submit} classname="w-[100%] !mt-16 rounded-lg" />
+          <CustomButton title={submit} classname="w-[100%] !mt-16 rounded-lg" />
         </form>
         <p className="mt-10 flex items-center justify-center gap-2 text-lg text-text-color-light dark:text-text-color-dark">
           Already have an account?{" "}

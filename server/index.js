@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
-const userRoutes = require('./routes/UserRoutes')
+const Routes = require('./routes/Routes')
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 // userRoutes
-app.use("/api", userRoutes);
+app.use("/api", Routes);
 
 mongoose
   .connect(process.env.MONGO_URI)

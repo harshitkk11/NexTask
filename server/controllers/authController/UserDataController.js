@@ -1,11 +1,11 @@
-const User = require("../models/UserModel");
+const User = require("../../models/UserModel");
 
 // For returning user data after token is verified
 const getUser = async (req, res) => {
     const userId = req.id;
 
     try {
-        const user = await User.findById(userId, "-password -is_verified -__v -createdAt -updatedAt");
+        const user = await User.findById(userId, "-password -is_verified -__v -createdAt -updatedAt -_id");
 
         if (!user) {
             return res.status(400).json({ error: "Unable to find user" });

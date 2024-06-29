@@ -4,6 +4,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/flowbite-react/lib/esm/**/*.js'
   ],
   theme: {
     colors: {
@@ -14,6 +15,11 @@ export default {
         dark: "#121212",
       },
 
+      "dashboard-bg": {
+        light: "#f8f9fa",
+        dark: "#2c2f33",
+      },
+
       "text-color": {
         light: "#333333",
         dark: "#f5f5f5",
@@ -22,6 +28,11 @@ export default {
       "navbar-background": {
         light: "#f8f9fa",
         dark: "#343a40",
+      },
+
+      "dashboard-navbar-bg": {
+        light: "#ffffff",
+        dark: "#1f1f1f",
       },
 
       "navbar-text": {
@@ -105,6 +116,8 @@ export default {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 

@@ -3,7 +3,7 @@ import NavBar from "./NavBar2";
 
 const PrivateRoute = () => {
   const isLogin = localStorage.getItem("islogin");
-  if (!isLogin) return <Navigate to="/signin" />;
+  // if (!isLogin) return <Navigate to="/signin" />;
   return (
     <>
       <NavBar />

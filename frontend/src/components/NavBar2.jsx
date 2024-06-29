@@ -3,13 +3,10 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import Logo from "./Logo";
-import Button from "./Button";
-import { useNavigate } from "react-router-dom";
+import Profile from "./Profile";
 
 const NavBar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const navigate = useNavigate();
-
 
   function toggleTheme() {
     if (theme === "dark") {
@@ -19,71 +16,21 @@ const NavBar = () => {
     }
   }
 
-  function handleClick() {
-    navigate("/signin")
-  }
-
   return (
-    // <header
-    //   className={`w-[100%] h-[4em] flex justify-center items-center ${
-    //     isLoggedIn ? "bg-nav-background" : "bg-transparent"
-    //   }`}
-    // >
-    //   <nav
-    //     className={`flex items-center justify-between w-[100%] h-[100%] p-5 ${
-    //       !isLoggedIn && "w-[97%] border-b border-border-color px-1"
-    //     }`}
-    //     aria-label="Global"
-    //   >
-    //     <div className="flex flex-row justify-center w-auto h-[50%]">
-    //       {!isLoggedIn ? (
-    //         <a
-    //           href="/"
-    //           className="flex flex-row justify-center items-center gap-0.5"
-    //         >
-    //           <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-    //             NexTask
-    //           </span>
-    //           <span className="flex justify-center items-center font-semibold text-[1.5rem]">
-    //             |
-    //           </span>
-    //           <img className="h-6 w-auto" src={Logo1} alt="Website Logo" />
-    //         </a>
-    //       ) : (
-    //         <a
-    //           href="/"
-    //           className="flex justify-center items-center bg-transparent"
-    //         >
-    //           <img className="h-5 w-auto" src={Logo2} alt="Website Logo" />
-    //         </a>
-    //       )}
-    //     </div>
-    //     {isLoggedIn ? <Button title="Log out" /> : <Button title="Log in" />}
-    //   </nav>
-    // </header>
-    <header className="bg-navbar-background-light dark:bg-navbar-background-dark text-navbar-text-light dark:text-navbar-text-dark">
+    <header className="bg-dashboard-navbar-bg-light dark:bg-dashboard-navbar-bg-dark text-navbar-text-light dark:text-navbar-text-dark">
       <nav
-        className="flex items-center justify-between p-6 lg:px-8"
+        className="flex items-center justify-between p-4 lg:px-8"
         aria-label="Global"
       >
         <Logo />
-        <div className="flex justify-center items-center">
-          <Button
-            title="Log in"
-            classname="!text-sm font-semibold leading-6"
-            onclick={handleClick}
-          />
-          <Button
-            title={theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
-            classname={`ml-1 md:ml-4 p-2 text-[1.4rem] md:text-[1.5rem] flex !bg-transparent !shadow-none transition ease-in-out delay-150 ${theme === "dark" ? "!text-text-color-dark" : "!text-text-color-light"}`}
-            onclick={toggleTheme}
-          />
-          {/* <button
-            className={`ml-4 p-2 text-xl flex ${theme === "dark" ? "text-text-color-dark" : "text-text-color-light"}`}
+        <div className="flex items-center justify-center gap-7">
+          <button
             onClick={toggleTheme}
+            className="text-3xl text-text-color-light dark:text-text-color-dark"
           >
-            {theme === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
-          </button> */}
+            {theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
+          </button>
+          <Profile />
         </div>
       </nav>
     </header>

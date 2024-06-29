@@ -3,13 +3,12 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import Logo from "./Logo";
-import Button from "./Button";
+import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
-
 
   function toggleTheme() {
     if (theme === "dark") {
@@ -20,7 +19,7 @@ const NavBar = () => {
   }
 
   function handleClick() {
-    navigate("/signin")
+    navigate("/signin");
   }
 
   return (
@@ -67,23 +66,15 @@ const NavBar = () => {
         aria-label="Global"
       >
         <Logo />
-        <div className="flex justify-center items-center">
-          <Button
+        <div className="flex items-center justify-center gap-7">
+          <CustomButton
             title="Log in"
             classname="!text-sm font-semibold leading-6"
             onclick={handleClick}
           />
-          <Button
-            title={theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
-            classname={`ml-1 md:ml-4 p-2 text-[1.4rem] md:text-[1.5rem] flex !bg-transparent !shadow-none transition ease-in-out delay-150 ${theme === "dark" ? "!text-text-color-dark" : "!text-text-color-light"}`}
-            onclick={toggleTheme}
-          />
-          {/* <button
-            className={`ml-4 p-2 text-xl flex ${theme === "dark" ? "text-text-color-dark" : "text-text-color-light"}`}
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
-          </button> */}
+          <button onClick={toggleTheme} className="text-text-color-light dark:text-text-color-dark text-3xl">
+            {theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
+          </button>
         </div>
       </nav>
     </header>

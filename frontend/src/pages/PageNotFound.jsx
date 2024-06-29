@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
@@ -24,18 +24,18 @@ const PageNotFound = () => {
             }}
           />
         </div>
-        <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div class="text-center">
-            <p class="text-xl font-semibold tracking-wider text-link-color-light dark:text-link-color-dark">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+          <div className="flex flex-col justify-center items-center text-center">
+            <p className="text-xl font-semibold tracking-wider text-link-color-light dark:text-link-color-dark">
               404
             </p>
-            <h1 class="mt-4 text-3xl font-bold tracking-tight text-text-color-light dark:text-text-color-dark sm:text-5xl">
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-text-color-light dark:text-text-color-dark sm:text-5xl">
               Page not found
             </h1>
-            <p class="mt-6 text-lg leading-7 tracking-wide text-text-color-light dark:text-text-color-dark">
+            <p className="mt-6 text-lg leading-7 tracking-wide text-text-color-light dark:text-text-color-dark">
               Sorry, we couldn't find the page you're looking for.
             </p>
-            <Button
+            <CustomButton
               title="Go back home"
               classname="mt-10"
               onclick={handleClick}

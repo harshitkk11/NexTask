@@ -12,6 +12,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import DataProvider from "./hooks/DataProvider";
+import Verify from "./pages/Verify";
+import ForgotPassword from "./pages/ForgotPassword";
+import Reset from "./pages/Reset";
+import Board from "./pages/Board";
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
 axios.defaults.withCredentials = true;
@@ -48,10 +52,17 @@ function App() {
 
             <Route path="/signup" element={<Signup />} />
 
+            <Route path="/verify" element={<Verify />} />
+
             <Route path="/signin" element={<Signin />} />
 
+            <Route path="/forgot" element={<ForgotPassword />} />
+
+            <Route path="/reset" element={<Reset />} />
+
             <Route element={<PrivateRoute />}>
-              <Route path="/boards" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/board" element={<Board />} />
             </Route>
 
             <Route

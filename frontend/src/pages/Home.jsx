@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -24,7 +24,7 @@ const Home = () => {
           />
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center">
+          <div className="text-center flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold tracking-tight text-text-color-light dark:text-text-color-dark sm:text-6xl">
               Welcome to NexTask!
             </h1>
@@ -34,7 +34,7 @@ const Home = () => {
               workflow, boost productivity, and help you achieve your goals with
               ease.
             </p>
-            <Button
+            <CustomButton
               title="Get Started"
               classname="mt-10"
               onclick={handleClick}
@@ -144,7 +144,7 @@ const Home = () => {
             work with NexTask. Start your journey towards greater productivity
             and success today!
           </p>
-          <Button title="Get Started" classname="mt-10" onclick={handleClick} />
+          <CustomButton title="Get Started" classname="mt-10" onclick={handleClick} />
         </div>
 
         <div
