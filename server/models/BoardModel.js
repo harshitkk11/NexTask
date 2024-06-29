@@ -16,7 +16,7 @@ const Boards = new Schema({
         background: {
             type: String
         },
-        lists: [],
+        // lists: [],
         todo: [{
             title: {
                 type: String
