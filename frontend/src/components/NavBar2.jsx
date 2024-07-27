@@ -17,7 +17,7 @@ const NavBar = () => {
   }
 
   return (
-    <header className="bg-dashboard-navbar-bg-light dark:bg-dashboard-navbar-bg-dark text-navbar-text-light dark:text-navbar-text-dark">
+    <header className="bg-navbar-background-light dark:bg-navbar-background-dark text-home-text-light dark:text-home-text-dark border-b border-border-light dark:border-border-dark">
       <nav
         className="flex items-center justify-between p-4 lg:px-8"
         aria-label="Global"
@@ -26,7 +26,7 @@ const NavBar = () => {
         <div className="flex items-center justify-center gap-7">
           <button
             onClick={toggleTheme}
-            className="text-3xl text-text-color-light dark:text-text-color-dark"
+            className="text-3xl text-home-text-light dark:text-home-text-dark"
           >
             {theme === "dark" ? <MdDarkMode /> : <MdLightMode />}
           </button>

@@ -1,5 +1,5 @@
 import React from "react";
-import CustomButton from "../components/CustomButton";
+import Button1 from "../components/Button1";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
@@ -10,7 +10,7 @@ const PageNotFound = () => {
   };
 
   return (
-    <div className="bg-background-light dark:bg-background-dark">
+    <div className="w-full h-[90vh] bg-home-background-light dark:bg-home-background-dark flex justify-center items-center">
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -26,16 +26,16 @@ const PageNotFound = () => {
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="flex flex-col justify-center items-center text-center">
-            <p className="text-xl font-semibold tracking-wider text-link-color-light dark:text-link-color-dark">
+            <p className="text-xl font-semibold trackinig-wider text-link">
               404
             </p>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-text-color-light dark:text-text-color-dark sm:text-5xl">
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-home-text-light dark:text-home-text-dark sm:text-5xl">
               Page not found
             </h1>
-            <p className="mt-6 text-lg leading-7 tracking-wide text-text-color-light dark:text-text-color-dark">
+            <p className="mt-6 text-lg leading-7 tracking-wide text-home-text-light dark:text-home-text-dark">
               Sorry, we couldn't find the page you're looking for.
             </p>
-            <CustomButton
+            <Button1
               title="Go back home"
               classname="mt-10"
               onclick={handleClick}

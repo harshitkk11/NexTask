@@ -1,55 +1,41 @@
-import { Button, Popover } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { useState } from "react";
-import { IoClose } from "react-icons/io5";
-import CustomButton from "../components/CustomButton";
+import Button1 from "./Button1";
 
-const CustomModal = ({
-  title,
-  bClass,
-  heading = "",
-  popoverform,
-  onsubmit,
-  submitbtn = "",
-  isdisabled,
-}) => {
-  const [open, setOpen] = useState(false);
+const CustomModal = ({ buttonStyle, content}) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  }
+
+  const handleSubmit = () => {
+    onsubmit;
+    setOpenModal(false)
+  }
 
   return (
-    <Popover
-      aria-labelledby="form-popover"
-      open={open}
-      arrow={false}
-      placement="auto"
-      onOpenChange={setOpen}
-      className="z-50 rounded-md border-0 bg-dashboard-bg-light shadow-lg outline-none dark:bg-dashboard-bg-dark"
-      content={
-        <div className=" flex w-72 flex-col gap-4 p-4 text-sm text-text-color-light dark:text-text-color-dark">
-          <div className="flex justify-end">
-            <span
-              onClick={() => setOpen(false)}
-              className="cursor-pointer text-lg text-text-color-light hover:text-button-hover-light dark:text-text-color-dark dark:hover:text-button-hover-dark"
-            >
-              <IoClose />
-            </span>
-          </div>
-          <h4 className="text-lg font-semibold ">{heading}</h4>
-          <form className="flex flex-col gap-7" onSubmit={onsubmit}>
-            {popoverform}
-            <CustomButton
-              title={submitbtn}
-              isdisabled={isdisabled}
-              classname="text-center"
-            />
-          </form>
-        </div>
-      }
-    >
-      <Button
-        className={`border-0 text-button-text-light dark:text-button-text-dark ${bClass}`}
+    <>
+      <button
+        onClick={() => setOpenModal(true)}
+        className={`bg-home-button-background-light text-home-button-text-light hover:bg-home-button-hover-light dark:bg-home-button-background-dark dark:text-home-button-text-dark hover:dark:bg-home-button-hover-dark ${buttonStyle}`}
       >
-        <p className="text-lg">{title}</p>
-      </Button>
-    </Popover>
+        Create new board
+      </button>
+
+      <Modal
+        show={openModal}
+        size="sm"
+        onClose={onCloseModal}
+        popup
+        className="bg-black"
+      >
+        <Modal.Header className="bg-navbar-background-light dark:bg-navbar-background-dark rounded-t-lg text-home-text-light dark:text-home-text-dark" />
+        <Modal.Body className="bg-navbar-background-light dark:bg-navbar-background-dark rounded-b-lg text-home-text-light dark:text-home-text-dark">
+            {content}
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ const InputField = ({
   label = "",
   type = "",
   name = "",
-  autocomplete="",
+  autocomplete = "",
   placeholder = "",
   onchange,
   value,
@@ -10,11 +10,11 @@ const InputField = ({
   error,
 }) => {
   return (
-    <div>
-      <div className="max-w-sm space-y-4">
+    <div className="w-full">
+      <div className="w-full space-y-2">
         <label
           htmlFor={label}
-          className="mb-2 block text-sm font-medium text-text-color-light dark:text-text-color-dark"
+          className="block w-full text-base font-semibold text-home-text-light dark:text-home-text-dark"
         >
           {label}
         </label>
@@ -22,7 +22,9 @@ const InputField = ({
           type={type}
           id={label}
           name={name}
-          className={`block w-full rounded-lg border bg-input-background-light px-4 py-3 text-sm text-input-text-light outline-1 outline-button-hover-light dark:bg-input-background-dark dark:text-input-text-dark dark:outline-button-hover-dark ${error ? "border-error-light dark:border-error-dark": "border-input-text-light dark:border-input-text-dark"}`}
+          className={`bg-input outline-primary w-full rounded-lg border-2 px-4 py-3 text-base font-medium text-black outline-1 ${
+            error ? "border-error" : "border-border"
+          }`}
           required=""
           aria-describedby={label}
           autoComplete={autocomplete}
@@ -32,11 +34,7 @@ const InputField = ({
           value={value}
         />
       </div>
-      {error && (
-        <p className={`mt-1 text-base text-error-light dark:text-error-dark`}>
-          {error}
-        </p>
-      )}
+      {error && <p className="text-error mt-1 text-base">{error}</p>}
     </div>
   );
 };

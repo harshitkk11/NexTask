@@ -2,23 +2,20 @@ const Boards = require('../../models/BoardModel');
 
 
 const CreateBoard = async (req, res) => {
-    const { username, boardtitle, background } = req.body;
+    const { userId, boardtitle, background } = req.body;
     const newboard = { boardtitle: boardtitle, background: background }
 
     try {
-        const user = await Boards.findOne({ username })
+        const user = await Boards.findOne({ userId })
 
         if (user) {
-            const board = user.boarddata.find((board) => board.boardtitle == boardtitle);
-
-            if (!board) {
-                const create = await Boards.findOneAndUpdate({ username }, { $push: { boarddata: newboard } })
-                return res.status(200).json(create)
-            }
-            return res.status(200).json({ error: "Board title already exist" })
+            const create = await Boards.findOneAndUpdate({ userId }, { $push: { boarddata: newboard } }, { new: true })
+            return res.status(200).json(create)
         }
+
         else {
-            const createnew = await Boards.create({ username, boarddata: [newboard] })
+            const createnew = await Boards.create({ userId, boarddata: [newboard] })
+            await createnew.save()
             return res.status(200).json(createnew)
         }
     } catch (error) {

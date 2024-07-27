@@ -9,7 +9,7 @@ const Logo = () => {
 
   useEffect(() => {
     if (theme === "dark") {
-      setColor("#f5f5f5");
+      setColor("#E0E0E0");
     } else {
       setColor("#333333");
     }
@@ -17,10 +17,10 @@ const Logo = () => {
 
   return (
     <button className="w-auto flex justify-center items-center gap-0.5 " onClick={() => navigate("/")}>
-      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark tracking-wide">
+      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-home-text-light dark:text-home-text-dark tracking-wide">
         NexTask
       </span>
-      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-text-color-light dark:text-text-color-dark">
+      <span className="flex justify-center items-center text-[1.4rem] md:text-[1.5rem] font-semibold text-home-text-light dark:text-home-text-dark">
         |
       </span>
       <svg

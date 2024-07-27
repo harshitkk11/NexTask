@@ -1,5 +1,6 @@
-import CustomButton from "../components/CustomButton";
+// import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
+import Button1 from "../components/Button1";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-background-light dark:bg-background-dark">
+    <div className="bg-home-background-light dark:bg-home-background-dark">
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -23,38 +24,43 @@ const Home = () => {
             }}
           />
         </div>
+
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-bold tracking-tight text-text-color-light dark:text-text-color-dark sm:text-6xl">
+          <div className="flex flex-col items-center justify-center text-center">
+            <h1 className="text-home-text-light dark:text-home-text-dark text-4xl font-bold sm:text-6xl">
               Welcome to NexTask!
             </h1>
-            <p className="mt-6 text-lg leading-8 text-text-color-light dark:text-text-color-dark tracking-wide">
+
+            <p className="text-home-text-light dark:text-home-text-dark mt-6 text-lg font-medium leading-8">
               Whether you're a busy professional, a diligent student, or a
               proactive team leader, NexTask is here to streamline your
               workflow, boost productivity, and help you achieve your goals with
               ease.
             </p>
-            <CustomButton
+
+            <Button1
               title="Get Started"
-              classname="mt-10"
               onclick={handleClick}
+              classname="mt-10 !px-10 !py-3"
             />
           </div>
         </div>
-        <div className="w-[100%] flex flex-col justify-center items-center gap-10">
-          <h2 className="font-bold text-4xl text-text-color-light dark:text-text-color-dark">
+
+        <div className="flex w-[100%] flex-col items-center justify-center gap-10">
+          <h2 className="text-home-text-light dark:text-home-text-dark text-4xl font-bold">
             Why NexTask?
           </h2>
-          <div className="w-[100%] flex flex-col md:flex-row gap-10 md:gap-0 justify-center">
-            <div className="w-[100%] flex flex-col p-5 gap-3">
-              <div className="w-12 p-2 mb-4 flex justify-center items-center rounded-lg bg-button-background-light dark:bg-button-background-dark text-button-text-light dark:text-button-text-dark">
+
+          <div className="flex w-[100%] flex-col justify-center gap-10 md:flex-row md:gap-0">
+            <div className="flex w-[100%] flex-col gap-3 p-5">
+              <div className="bg-home-button-background-light dark:bg-home-button-background-dark text-home-button-text-light dark:text-home-button-text-dark mb-4 flex w-12 items-center justify-center rounded-lg p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -63,10 +69,12 @@ const Home = () => {
                   />
                 </svg>
               </div>
-              <h3 className="w-[100%] text-start text-xl font-bold text-text-color-light dark:text-text-color-dark">
+
+              <h3 className="text-home-text-light dark:text-home-text-dark w-[100%] text-start text-xl font-bold">
                 Intuitive Interface
               </h3>
-              <p className="text-lg text-text-color-light dark:text-text-color-dark tracking-wide">
+
+              <p className="text-home-text-light dark:text-home-text-dark text-lg font-medium">
                 Say goodbye to cluttered to-do lists and chaotic spreadsheets.
                 NexTask offers a sleek and intuitive interface inspired by the
                 popular Kanban methodology, allowing you to visualize your
@@ -75,15 +83,15 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="w-[100%] flex flex-col p-5 gap-3">
-              <div className="w-12 p-2 mb-4 flex justify-center items-center rounded-lg bg-button-background-light dark:bg-button-background-dark text-button-text-light dark:text-button-text-dark">
+            <div className="flex w-[100%] flex-col gap-3 p-5">
+              <div className="bg-home-button-background-light dark:bg-home-button-background-dark text-home-button-text-light dark:text-home-button-text-dark mb-4 flex w-12 items-center justify-center rounded-lg p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -92,10 +100,12 @@ const Home = () => {
                   />
                 </svg>
               </div>
-              <h3 className="w-[100%] text-start text-xl font-bold text-text-color-light dark:text-text-color-dark">
+
+              <h3 className="text-home-text-light dark:text-home-text-dark w-[100%] text-start text-xl font-bold">
                 Secure and Reliable
               </h3>
-              <p className="text-lg text-text-color-light dark:text-text-color-dark tracking-wide">
+
+              <p className="text-home-text-light dark:text-home-text-dark text-lg font-medium">
                 Your data's security is our top priority. With robust user
                 authentication and data encryption, you can trust NexTask to
                 keep your information safe and secure. Focus on your tasks with
@@ -103,15 +113,15 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="w-[100%] flex flex-col p-5 gap-3">
-              <div className="w-12 p-2 mb-4 flex justify-center items-center rounded-lg bg-button-background-light dark:bg-button-background-dark text-button-text-light dark:text-button-text-dark">
+            <div className="flex w-[100%] flex-col gap-3 p-5">
+              <div className="bg-home-button-background-light dark:bg-home-button-background-dark text-home-button-text-light dark:text-home-button-text-dark mb-4 flex w-12 items-center justify-center rounded-lg p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="transparent"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -121,10 +131,11 @@ const Home = () => {
                 </svg>
               </div>
 
-              <h3 className="w-[100%] text-start text-xl font-bold text-text-color-light dark:text-text-color-dark">
+              <h3 className="text-home-text-light dark:text-home-text-dark w-[100%] text-start text-xl font-bold">
                 Seamless Collaboration
               </h3>
-              <p className="text-lg text-text-color-light dark:text-text-color-dark tracking-wide">
+
+              <p className="text-home-text-light dark:text-home-text-dark text-lg font-medium">
                 Collaboration is key to success, and NexTask makes it
                 effortless. Share tasks, assign responsibilities, and track
                 progress in real-time with your team members or collaborators.
@@ -135,16 +146,22 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="w-[100%] my-40 pt-40 flex flex-col gap-10 justify-center items-center border-t border-border-color-light dark:border-border-color-dark">
-          <h3 className="text-3xl font-bold tracking-wide text-text-color-light dark:text-text-color-dark sm:text-6xl">
+        <div className="border-border-light dark:border-border-dark my-40 flex w-[100%] flex-col items-center justify-center gap-10 border-t pt-40">
+          <h3 className="text-home-text-light dark:text-home-text-dark text-3xl font-bold sm:text-6xl">
             Get Started Today
           </h3>
-          <p className="max-w-2xl text-lg text-center leading-8 tracking-wide text-text-color-light dark:text-text-color-dark">
+
+          <p className="text-home-text-light dark:text-home-text-dark max-w-2xl text-center text-lg leading-8">
             Join thousands of satisfied users who have transformed the way they
             work with NexTask. Start your journey towards greater productivity
             and success today!
           </p>
-          <CustomButton title="Get Started" classname="mt-10" onclick={handleClick} />
+
+          <Button1
+            title="Get Started"
+            onclick={handleClick}
+            classname="mt-10 !px-10 !py-3"
+          />
         </div>
 
         <div

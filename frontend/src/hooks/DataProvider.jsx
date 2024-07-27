@@ -1,37 +1,40 @@
-import axios from "axios";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 import { useContext, createContext, useState, useEffect } from "react";
 
 export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const isLogin = localStorage.getItem("islogin");
   const [userData, setUserData] = useState({
     name: "",
-    username: "",
     email: "",
+    id: "",
   });
 
   useEffect(() => {
-    async function fetchData() {
-      if (isLogin) {
-        try {
-          const response = await axios.get("/getuser");
-          if (response) {
-            const res = response.data.user;
+    const fetchData = () => {
+      try {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            localStorage.setItem("islogedin", true);
+
             setUserData({
-              name: res.name,
-              username: res.username,
-              email: res.email,
-              // id: res._id,
+              name: user.displayName,
+              email: user.email,
+              id: user.uid,
             });
+          } else {
+            localStorage.removeItem("islogedin");
           }
-        } catch (err) {
-          localStorage.removeItem("islogin");
-        }
+        });
+      } catch (err) {
+        toast.error("Something went wrong!!");
+        console.log(err);
       }
-    }
+    };
+
     fetchData();
-  }, []);
+  }, [auth]);
 
   return (
     <DataContext.Provider value={{ userData, setUserData }}>

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Boards = new Schema({
-    username: {
+    userId: {
         type: String,
         required: true
     },
@@ -11,36 +11,13 @@ const Boards = new Schema({
         boardtitle: {
             type: String,
             required: true,
-            unique: true
         },
         background: {
             type: String
         },
-        // lists: [],
-        todo: [{
-            title: {
-                type: String
-            },
-            description : {
-                type: String
-            }
-        }],
-        inprogress: [{
-            title: {
-                type: String
-            },
-            description : {
-                type: String
-            }
-        }],
-        done: [{
-            title: {
-                type: String
-            },
-            description : {
-                type: String
-            }
-        }]
+        id: {
+            type:Schema.Types.ObjectId
+        }
     }]
 })
 
