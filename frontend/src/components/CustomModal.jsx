@@ -1,18 +1,12 @@
 import { Modal } from "flowbite-react";
 import { useState } from "react";
-import Button1 from "./Button1";
 
-const CustomModal = ({ buttonStyle, content}) => {
+const CustomModal = ({ buttonStyle, content }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onCloseModal = () => {
     setOpenModal(false);
-  }
-
-  const handleSubmit = () => {
-    onsubmit;
-    setOpenModal(false)
-  }
+  };
 
   return (
     <>
@@ -30,9 +24,9 @@ const CustomModal = ({ buttonStyle, content}) => {
         popup
         className="bg-black"
       >
-        <Modal.Header className="bg-navbar-background-light dark:bg-navbar-background-dark rounded-t-lg text-home-text-light dark:text-home-text-dark" />
-        <Modal.Body className="bg-navbar-background-light dark:bg-navbar-background-dark rounded-b-lg text-home-text-light dark:text-home-text-dark">
-            {content}
+        <Modal.Header className="rounded-t-lg bg-navbar-background-light text-home-text-light dark:bg-navbar-background-dark dark:text-home-text-dark" />
+        <Modal.Body className="rounded-b-lg bg-navbar-background-light text-home-text-light dark:bg-navbar-background-dark dark:text-home-text-dark">
+          {content}
         </Modal.Body>
       </Modal>
     </>

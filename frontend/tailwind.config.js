@@ -67,6 +67,11 @@ export default {
         dark: "#E0E0E0",
       },
 
+      "card-backgroung": {
+        light: "#FFFFFF",
+        dark: "#1F1F1F",
+      },
+
       border: {
         light: "#e1e1e1",
         dark: "#595959"

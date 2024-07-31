@@ -1,6 +1,6 @@
 const Lists = require('../../models/ListDataModel');
 
-const createList = async (req, res) => {
+const CreateList = async (req, res) => {
     const { userId, boardId, listTitle } = req.body
 
     try {
@@ -23,4 +23,4 @@ const createList = async (req, res) => {
     }
 }
 
-module.exports = { createList }
+module.exports = { CreateList }

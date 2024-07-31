@@ -4,18 +4,22 @@ const { CreateBoard } = require("../controllers/boardController/CreateBoards");
 const { UpdateBoard } = require("../controllers/boardController/UpdateBoard");
 const { DeleteBoard } = require("../controllers/boardController/DeleteBoard");
 const { GetBoards } = require("../controllers/boardController/GetBoards");
-const { createList } = require('../controllers/listController/CreateList');
-const { AddTasks } = require('../controllers/taskController/AddTasks');
+const { CreateList } = require('../controllers/listController/CreateList');
 const { GetLists } = require('../controllers/listController/GetLists');
+const { DeleteList } = require("../controllers/listController/DeleteList");
+const { UpdateList } = require("../controllers/listController/UpdateList");
+const { AddTasks } = require('../controllers/taskController/AddTasks');
+
 
 const router = express.Router();
 
 router.post('/createboard', CreateBoard);
 router.post('/updateboard', UpdateBoard);
-router.post('/deleteboard', DeleteBoard);
+router.post('/deleteboard', DeleteBoard, DeleteList);
 router.post('/getboards', GetBoards);
 router.post('/getlists', GetLists);
-router.post('/createlist', createList)
+router.post('/createlist', CreateList)
+router.post('/updatelist', UpdateList)
 router.post('/addtask', AddTasks)
 
 

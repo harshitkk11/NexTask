@@ -22,7 +22,7 @@ const Profile = () => {
   return (
     <Dropdown
       label=""
-      dismissOnClick={false}
+      dismissOnClick={true}
       renderTrigger={() => (
         <span className="cursor-pointer text-3xl hover:text-home-button-hover-light hover:dark:text-home-button-hover-dark">
           <RxAvatar />
