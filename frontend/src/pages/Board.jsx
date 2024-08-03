@@ -18,6 +18,7 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  TouchSensor
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -47,6 +48,7 @@ const Board = () => {
   const [listTitle, setListTitle] = useState("");
 
   const sensors = useSensors(
+    useSensor(TouchSensor),
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 8,
