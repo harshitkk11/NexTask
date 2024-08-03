@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: process.env.ORIGIN_VALUE }))
+app.use(cors({ origin: process.env.ORIGIN_VALUE }))
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
