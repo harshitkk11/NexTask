@@ -127,7 +127,7 @@ const TaskItem = (props) => {
         {...listeners}
         {...attributes}
         style={style}
-        className="peer flex w-full items-center justify-between rounded-xl bg-card-backgroung-light p-3 text-list-text-color-light dark:bg-card-backgroung-dark dark:text-list-text-color-dark"
+        className="peer touch-auto flex w-full items-center justify-between rounded-xl bg-card-backgroung-light p-3 text-list-text-color-light dark:bg-card-backgroung-dark dark:text-list-text-color-dark"
         onClick={() => setOpenModal(true)}
       >
         {taskData.title}
