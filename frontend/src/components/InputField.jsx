@@ -22,8 +22,8 @@ const InputField = ({
           type={type}
           id={label}
           name={name}
-          className={`bg-input outline-primary w-full rounded-lg border-2 px-4 py-3 text-base font-medium text-black outline-1 ${
-            error ? "border-error" : "border-border"
+          className={`bg-gray-400 bg-opacity-30 dark:bg-black dark:bg-opacity-30 text-home-text-light dark:text-home-text-dark outline-none w-full rounded-lg border-0 px-4 py-3 text-base font-medium ${
+            error ? "border-2 border-error" : "border-0"
           }`}
           required=""
           aria-describedby={label}

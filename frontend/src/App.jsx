@@ -13,9 +13,9 @@ import PageNotFound from "./pages/PageNotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import DataProvider from "./hooks/DataProvider";
 import Board from "./pages/Board";
+import Settings from "./pages/Settings";
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
-axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -56,6 +56,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/board" element={<Board />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           <Route

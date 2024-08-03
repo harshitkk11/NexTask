@@ -19,8 +19,13 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 import TaskList from "../components/DragAndDrop/TaskList";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import TaskItem from "../components/DragAndDrop/TaskItem";
 
 const Board = () => {
   const initialized = useRef(false);
@@ -42,7 +47,11 @@ const Board = () => {
   const [listTitle, setListTitle] = useState("");
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
@@ -93,6 +102,12 @@ const Board = () => {
     setBoardTitle(e.target.value);
   };
 
+  const cancelHandler = (e) => {
+    e.preventDefault()
+    
+    setShowAddList(false);
+  };
+
   // handle the update of the board title and background
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -128,7 +143,7 @@ const Board = () => {
   };
 
   // this function handle the deletion of the board
-  const handleDelete = async (e) => {
+  const handleDeleteBoard = async (e) => {
     try {
       const response = await axios.post("/deleteboard", {
         userId: userData.id,
@@ -181,147 +196,191 @@ const Board = () => {
     }
   };
 
-  // This function will return the index of the task
-  const getTaskPos = (listId, taskId) => {
-    return boardData
-      .find((lists) => lists._id === listId)
-      .tasks.findIndex((task) => task._id === taskId);
+  // This function will return the value of items
+  function findValueOfItems(id, type) {
+    if (type === "container") {
+      return boardData.find((container) => container._id === id);
+    }
+    if (type === "item") {
+      return boardData.find((container) =>
+        container.tasks.find((task) => task._id === id),
+      );
+    }
+  }
+
+  const getContainerPos = (containerId) => {
+    return boardData.findIndex((container) => container._id === containerId);
   };
 
-  // This function will be called on drag end
-  const handleDragEnd = (e) => {
+  // This function will return the index of the task
+  const getTaskPos = (container, taskId) => {
+    return container.tasks.findIndex((task) => task._id === taskId);
+  };
+
+  const handleDragMove = (e) => {
     const { active, over } = e;
 
-    if (active.id === over?.id) return;
+    if (
+      active.data.current.type.includes("task") &&
+      over?.data.current.type.includes("task") &&
+      active &&
+      over &&
+      active.id !== over.id
+    ) {
+      const activeContainer = findValueOfItems(active.id, "item");
+      const overContainer = findValueOfItems(over.id, "item");
+
+      if (!activeContainer || !overContainer) return;
+
+      const activeContainerIndex = getContainerPos(activeContainer._id);
+      const overContainerIndex = getContainerPos(overContainer._id);
+
+      const activeTaskIndex = getTaskPos(activeContainer, active.id);
+      const overTaskIndex = getTaskPos(overContainer, over?.id);
+
+      if (activeContainerIndex === overContainerIndex) {
+        let temp = [...boardData];
+        temp[activeContainerIndex].tasks = arrayMove(
+          temp[activeContainerIndex].tasks,
+          activeTaskIndex,
+          overTaskIndex,
+        );
+
+        setBoardData(temp);
+      } else {
+        let temp = [...boardData];
+        const [removeditem] = temp[activeContainerIndex].tasks.splice(
+          activeTaskIndex,
+          1,
+        );
+        temp[overContainerIndex].tasks.splice(overTaskIndex, 0, removeditem);
+        setBoardData(temp);
+      }
+    }
 
     if (
-      active.data.current?.sortable.containerId !==
-      over?.data.current?.sortable.containerId
-    )
-      return;
+      active.data.current.type.includes("task") &&
+      over?.data.current.type.includes("container") &&
+      active &&
+      over &&
+      active.id !== over.id
+    ) {
+      const activeContainer = findValueOfItems(active.id, "item");
+      const overContainer = findValueOfItems(over.id, "container");
 
-    const listId = active.data.current?.sortable.containerId;
+      if (!activeContainer || !overContainer) return;
 
-    setBoardData((boardData) => {
-      const temp = [...boardData];
+      const activeContainerIndex = getContainerPos(activeContainer._id);
+      const overContainerIndex = getContainerPos(overContainer._id);
 
-      for (let list of temp) {
-        if (list._id === listId) {
-          const oldPos = getTaskPos(listId, active.id);
-          const newPos = getTaskPos(listId, over.id);
+      const activeTaskIndex = getTaskPos(activeContainer, active.id);
 
-          const updatedTasks = arrayMove(list.tasks, oldPos, newPos);
-          list.tasks = updatedTasks;
-
-          return temp;
-        }
-      }
-    });
-
-    // handleUpdateList(e);
+      let temp = [...boardData];
+      const [removeditem] = temp[activeContainerIndex].tasks.splice(
+        activeTaskIndex,
+        1,
+      );
+      temp[overContainerIndex].tasks.push(removeditem);
+      setBoardData(temp);
+    }
   };
 
-  // const handleDragOver = (e) => {
-  //   const { active, over } = e;
-  //   // console.log(over, over.id, active);
+  //  This is the function that handles the sorting of the containers and items on drag end.
+  function handleDragEnd(e) {
+    const { active, over } = e;
 
-  //   if (!over) return;
+    // Handling item Sorting
+    if (
+      active.data.current.type.includes("task") &&
+      over?.data.current.type.includes("task") &&
+      active &&
+      over &&
+      active.id !== over.id
+    ) {
+      const activeContainer = findValueOfItems(active.id, "task");
+      const overContainer = findValueOfItems(over.id, "task");
 
-  //   const initialContainer = active.data.current?.sortable?.containerId;
-  //   const targetContainer = over.data.current?.sortable?.containerId;
-  //   // console.log(initialContainer, targetContainer)
+      if (!activeContainer || !overContainer) return;
 
-  //   if (!initialContainer) return;
+      const activeContainerIndex = getContainerPos(activeContainer._id);
+      const overContainerIndex = getContainerPos(overContainer._id);
 
-  //   setBoardData((boardData) => {
-  //     const temp = [...boardData];
+      const activeTaskIndex = getTaskPos(activeContainer, active.id);
+      const overTaskIndex = getTaskPos(overContainer, over?.id);
 
-  //     if (!targetContainer) {
-  //       if (over.id) {
-  //         for (let list of boardData) {
-  //           if (
-  //             list._id !== over.id &&
-  //             list.tasks.includes(active.id.toString())
-  //           ) {
-  //             return temp;
-  //           }
-  //         }
+      // In the same container
+      if (activeContainerIndex === overContainerIndex) {
+        let temp = [...boardData];
+        temp[activeContainerIndex].tasks = arrayMove(
+          temp[activeContainerIndex].tasks,
+          activeTaskIndex,
+          overTaskIndex,
+        );
+        setBoardData(temp);
+      } else {
+        // In different containers
+        let temp = [...boardData];
+        const [removeditem] = temp[activeContainerIndex].tasks.splice(
+          activeTaskIndex,
+          1,
+        );
+        temp[overContainerIndex].tasks.splice(overTaskIndex, 0, removeditem);
+        setBoardData(temp);
+      }
+    }
 
-  //         for (let list of temp) {
-  //           if (list._id === initialContainer) {
-  //             var task = list.tasks.filter(
-  //               (task) => task._id === active.id.toString(),
-  //             );
-  //             temp.map((list) => {
-  //               if (list._id === over?.id) {
-  //                 list.tasks.push(task[0]);
-  //               }
-  //             });
-  //           }
-  //         }
+    // Handling item dropping into Container
+    if (
+      active.data.current.type.includes("task") &&
+      over?.data.current.type.includes("container") &&
+      active &&
+      over &&
+      active.id !== over.id
+    ) {
+      const activeContainer = findValueOfItems(active.id, "item");
+      const overContainer = findValueOfItems(over.id, "container");
 
-  //         for (let list of temp) {
-  //           if (list._id === initialContainer) {
-  //             list.tasks = list.tasks.filter(
-  //               (task) => task._id !== active.id.toString(),
-  //             );
-  //           }
-  //         }
-  //         return temp;
-  //       }
-  //       console.log(temp);
-  //     }
+      if (!activeContainer || !overContainer) return;
 
-      //   if (initialContainer === targetContainer) {
-      //     const oldPos = getTaskPos(initialContainer, active.id);
-      //     const newPos = getTaskPos(initialContainer, over.id);
+      const activeContainerIndex = getContainerPos(activeContainer._id);
+      const overContainerIndex = getContainerPos(overContainer._id);
 
-      //     for (let list of temp) {
-      //       if (list._id == initialContainer) {
-      //         const updatedTasks = arrayMove(list.tasks, oldPos, newPos);
+      const activeTaskIndex = getTaskPos(activeContainer, active.id);
 
-      //         list = updatedTasks;
-      //       }
-      //     }
-      //   } else {
-      //     for (let list of temp) {
-      //       if (list._id === initialContainer) {
-      //         list.tasks = list.tasks.filter(
-      //           (task) => task._id !== active.id.toString(),
-      //         );
-      //       }
-      //     }
-
-      //     const newPos = getTaskPos(targetContainer, over.id);
-
-      //     for (let list of temp) {
-      //       if (list._id === targetContainer) {
-      //         list.tasks = list.tasks.splice(newPos, 0, active.id.toString());
-      //       }
-      //     }
-      //   }
-
-  //     return temp;
-  //   });
-  // };
-
-  // It returns the list of Tasks from boardData
-  if (boardData) {
-    var list = boardData.map((item) => {
-      return (
-        <TaskList
-          key={item._id}
-          title={item.title}
-          tasks={item.tasks}
-          id={item._id}
-          onclick={(e) => handleAddTask(e, item._id)}
-          boardData={boardData}
-          userId={userData.id}
-          boardId={location.state.id}
-        />
+      let temp = [...boardData];
+      const [removeditem] = temp[activeContainerIndex].tasks.splice(
+        activeTaskIndex,
+        1,
       );
-    });
+      temp[overContainerIndex].tasks.push(removeditem);
+      setBoardData(temp);
+    }
+    handleUpdateList(e);
   }
+
+  // this function handle the deletion of the board
+  const handleDeleteList = async (e, containerId) => {
+    const temp = [...boardData];
+
+    const containerIndex = getContainerPos(containerId);
+
+    temp.splice(containerIndex, 1);
+
+    setBoardData(temp);
+
+    try {
+      if (userData.id) {
+        await axios.post("/updatelist", {
+          userId: userData.id,
+          boardId: location.state.id,
+          listData: temp,
+        });
+      }
+    } catch (err) {
+      toast.error("Something went wrong !!");
+      console.log(err);
+    }
+  };
 
   return (
     <div
@@ -385,7 +444,7 @@ const Board = () => {
                   Are you sure you want to delete this board?
                 </h3>
                 <div className="flex justify-center gap-4">
-                  <Button color="failure" onClick={handleDelete}>
+                  <Button color="failure" onClick={handleDeleteBoard}>
                     {"Yes, I'm sure"}
                   </Button>
                   <Button
@@ -437,14 +496,48 @@ const Board = () => {
         </div>
       </nav>
       <div className="flex h-[90vh] w-full flex-row flex-wrap items-start justify-center gap-5 overflow-auto p-10 md:justify-start">
+        {/* Dnd kit for drag and drop */}
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
-          onDragStart={handleDragStart}
+          onDragMove={handleDragMove}
+          // onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
-          // onDragOver={handleDragOver}
         >
-          {list}
+          {boardData &&
+            boardData.map((container) => {
+              return (
+                <TaskList
+                  key={container._id}
+                  id={container._id}
+                  title={container.title}
+                  onclick={(e) => handleDeleteList(e, container._id)}
+                  boardData={boardData}
+                  userId={userData.id}
+                  boardId={location.state.id}
+                >
+                  <SortableContext
+                    id={container._id}
+                    items={container.tasks.map((task) => task._id)}
+                  >
+                    <ul className="flex flex-col gap-3">
+                      {container.tasks.map((task) => (
+                        <TaskItem
+                          key={task._id}
+                          title={task.title}
+                          description={task.description}
+                          containerId={container._id}
+                          id={task._id}
+                          boardData={boardData}
+                          userId={userData.id}
+                          boardId={location.state.id}
+                        />
+                      ))}
+                    </ul>
+                  </SortableContext>
+                </TaskList>
+              );
+            })}
         </DndContext>
 
         {!showAddList ? (
@@ -473,7 +566,7 @@ const Board = () => {
             />
             <div className="flex items-center justify-start gap-3">
               <Button1 title="Add list" classname="!px-4 !py-1" />
-              <button className="text-lg" onClick={() => setShowAddList(false)}>
+              <button className="text-lg" onClick={cancelHandler}>
                 <MdOutlineClose />
               </button>
             </div>

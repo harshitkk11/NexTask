@@ -1,22 +1,27 @@
-import { RxAvatar } from "react-icons/rx";
-import { useData } from "../hooks/DataProvider";
-import { Dropdown } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useData } from "../hooks/DataProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { Dropdown } from "flowbite-react";
+import { toast } from "react-toastify";
+import { RxAvatar } from "react-icons/rx";
+import { GoSignOut } from "react-icons/go";
+import { MdOutlineSettings } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
 
 const Profile = () => {
   const navigate = useNavigate();
   const { userData } = useData();
 
   const handleLogout = async () => {
-    signOut(auth).then(() => {
-      navigate("/signin")
-    }).catch((error) => {
-      toast.error("Something went wrong!!")
-      console.log(error)
-    });
+    signOut(auth)
+      .then(() => {
+        navigate("/signin");
+      })
+      .catch((error) => {
+        toast.error("Something went wrong!!");
+        console.log(error);
+      });
   };
 
   return (
@@ -36,18 +41,24 @@ const Profile = () => {
           {userData.email}
         </span>
       </Dropdown.Header>
-      <Dropdown.Item className="border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark" onClick={() => navigate("/dashboard")}>
-        Dashboard
+      <Dropdown.Item
+        className="flex items-center justify-start gap-2 rounded-md border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark"
+        onClick={() => navigate("/dashboard")}
+      >
+        <RxDashboard /> Dashboard
       </Dropdown.Item>
-      <Dropdown.Item className="border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark">
-        Settings
+      <Dropdown.Item
+        className="flex items-center justify-start gap-2 rounded-md border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark"
+        onClick={() => navigate("/settings")}
+      >
+        <MdOutlineSettings /> Settings
       </Dropdown.Item>
       <Dropdown.Divider className="my-3 border-b border-border-light dark:border-border-dark" />
       <Dropdown.Item
-        className="border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark"
+        className="flex items-center justify-start gap-2 rounded-md border-0 text-sm text-home-text-light outline-none hover:text-home-button-hover-light dark:text-home-text-dark hover:dark:text-home-button-hover-dark"
         onClick={handleLogout}
       >
-        Sign out
+        <GoSignOut /> Sign out
       </Dropdown.Item>
     </Dropdown>
   );
