@@ -176,8 +176,8 @@ const Dashboard = () => {
       </h3>
 
       {isExist === "notexist" ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-10">
-          <img src={kanbanimg} alt="kanban-method" className="md:h-[60%]" />
+        <div className="flex h-full w-full flex-col items-center justify-start gap-10">
+          <img src={kanbanimg} alt="kanban-method" className="md:h-[55%]" />
 
           <p className="text-center text-base text-home-text-light dark:text-home-text-dark sm:text-xl">
             Boards in NexTask are where tasks move between lists, helping you
