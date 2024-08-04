@@ -1,0 +1,25 @@
+{
+  "short_name": "NexTask",
+  "name": "NexTask",
+  "icons": [
+    {
+      "src": "logo1.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo2.webp",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo3.webp",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
