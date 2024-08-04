@@ -9,6 +9,7 @@ const { GetLists } = require('../controllers/listController/GetLists');
 const { DeleteList } = require("../controllers/listController/DeleteList");
 const { UpdateList } = require("../controllers/listController/UpdateList");
 const { AddTasks } = require('../controllers/taskController/AddTasks');
+const { DeleteUserData } = require('../controllers/DeleteUserData');
 
 
 const router = express.Router();
@@ -21,6 +22,6 @@ router.post('/getlists', GetLists);
 router.post('/createlist', CreateList)
 router.post('/updatelist', UpdateList)
 router.post('/addtask', AddTasks)
-
+router.post('/deleteuserdata', DeleteUserData);
 
 module.exports = router;
