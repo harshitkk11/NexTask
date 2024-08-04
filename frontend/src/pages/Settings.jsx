@@ -33,6 +33,7 @@ const Settings = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [submit, setSubmit] = useState("Save");
+  const [deleteButton, setDeleteButton] = useState("Delete");
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -138,6 +139,9 @@ const Settings = () => {
   const handleDelete = async (e) => {
     e.preventDefault();
 
+    setDeleteButton(<Spinner aria-label="Spinner" size="sm" />);
+    setIsDisabled(true);
+
     if (!password.deletePassword) {
       setErrors({
         currentPassword: "",
@@ -185,6 +189,9 @@ const Settings = () => {
           console.log(error);
         }
       });
+
+    setDeleteButton("Delete");
+    setIsDisabled(false);
   };
 
   return (
@@ -366,7 +373,7 @@ const Settings = () => {
                       onClick={handleDelete}
                       className="text-nowrap rounded-lg bg-error px-4 py-2 text-sm text-home-button-text-light dark:text-home-button-text-dark"
                     >
-                      Delete
+                      {deleteButton}
                     </button>
                   </div>
                 </div>
