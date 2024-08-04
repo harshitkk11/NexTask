@@ -21,12 +21,14 @@ const Settings = () => {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+    deletePassword: "",
   });
 
   const [errors, setErrors] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+    deletePassword: "",
   });
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -40,28 +42,51 @@ const Settings = () => {
     setPassword({ ...password, [name]: value });
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setSubmit(<Spinner aria-label="Spinner" size="sm" />);
     setIsDisabled(true);
 
-    if (password.newPassword === password.confirmPassword) {
-      updatePassword(auth.currentUser, password.newPassword)
-        .then(() => {
-          setPassword({
+    const credential = EmailAuthProvider.credential(
+      userData.email,
+      password.currentPassword,
+    );
+
+    await reauthenticateWithCredential(auth.currentUser, credential)
+      .then(async () => {
+        await updatePassword(auth.currentUser, password.newPassword).then(
+          () => {
+            setPassword({
+              currentPassword: "",
+              newPassword: "",
+              confirmPassword: "",
+              deletePassword: "",
+            });
+            toast.success("Password changed successfully");
+          },
+        );
+      })
+      .catch((error) => {
+        if (error.code === "auth/invalid-credential") {
+          setErrors({
+            currentPassword: "Password entered is incorrect.",
             newPassword: "",
-            currentUser: "",
+            confirmPassword: "",
+            deletePassword: "",
           });
-          toast.success("Password changed successfully");
-        })
-        .catch((error) => {
-          if (error.code === "auth/requires-recent-login") {
-            toast.error("Please re-login and try again.");
-          } else {
-            toast.error(error.code);
-          }
-        });
-    }
+        } else if (error.code === "auth/too-many-requests") {
+          setErrors({
+            currentPassword: "Too many attemp",
+            newPassword: "",
+            confirmPassword: "",
+            deletePassword: "",
+          });
+        } else {
+          toast.error("Something went wrong!!");
+          console.log(error);
+        }
+      });
+
     setSubmit("Save");
     setIsDisabled(false);
   };
@@ -69,24 +94,41 @@ const Settings = () => {
   const onValidate = (e) => {
     e.preventDefault();
 
-    if (password.newPassword.length < 8) {
+    if (!password.currentPassword) {
+      setErrors({
+        currentPassword: "Please enter your current password",
+        newPassword: "",
+        confirmPassword: "",
+        deletePassword: "",
+      });
+    } else if (password.newPassword.length < 8) {
       setErrors({
         currentPassword: "",
         newPassword:
           "Password length is too short. (Password length should be of atleast 8 characters)",
         confirmPassword: "",
+        deletePassword: "",
+      });
+    } else if (!password.confirmPassword) {
+      setErrors({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "Please enter password again",
+        deletePassword: "",
       });
     } else if (password.newPassword !== password.confirmPassword) {
       setErrors({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "Passwords do not match",
+        deletePassword: "",
       });
     } else {
       setErrors({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
+        deletePassword: "",
       });
 
       handleUpdate(e);
@@ -96,18 +138,19 @@ const Settings = () => {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    if (!password.currentPassword) {
+    if (!password.deletePassword) {
       setErrors({
-        currentPassword: "Please enter your current password",
+        currentPassword: "",
         newPassword: "",
         confirmPassword: "",
+        deletePassword: "Please enter your current password",
       });
       return;
     }
 
     const credential = EmailAuthProvider.credential(
       userData.email,
-      password.currentPassword,
+      password.deletePassword,
     );
 
     await reauthenticateWithCredential(auth.currentUser, credential)
@@ -125,46 +168,27 @@ const Settings = () => {
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
           setErrors({
-            currentPassword: "Password entered is incorrect.",
+            currentPassword: "",
             newPassword: "",
             confirmPassword: "",
+            deletePassword: "Password entered is incorrect.",
           });
         } else if (error.code === "auth/too-many-requests") {
           setErrors({
             currentPassword: "Too many attemp",
             newPassword: "",
             confirmPassword: "",
+            deletePassword: "Too many attemp",
           });
         } else {
           toast.error("Something went wrong!!");
           console.log(error);
         }
       });
-
-    // try {
-    //   const response = await axios.post("/deleteuserdata", {
-    //     userId: userData.id,
-    //   });
-
-    //   if (response.data) {
-    //     deleteUser(auth.currentUser).then(() => {
-    //       navigate("/signup");
-    //     });
-    //   }
-    // } catch (err) {
-    //   toast.error("Something went wrong!!");
-    // }
   };
 
   return (
     <div className="flex h-[100vh] w-full flex-col justify-center px-8 py-10 text-home-text-light dark:text-home-text-dark sm:px-10">
-      {/* <nav className="flex h-[18vh] w-full flex-col  items-start justify-between gap-4 border-b border-border-light px-10 pt-6 dark:border-border-dark sm:h-full sm:w-56 sm:items-center sm:justify-start sm:gap-8 sm:border-r sm:px-0 sm:py-10 sm:pl-3">
-        <ul className="flex w-full flex-row items-center justify-start gap-4 sm:flex-col sm:items-start sm:justify-start sm:gap-5">
-        <li className="w-1/2 cursor-pointer rounded-sm border-b-4 border-home-button-background-light py-3 text-center text-lg font-medium dark:border-home-button-background-dark sm:w-full sm:border-b-0 sm:border-r-2 sm:bg-gray-400 sm:bg-opacity-60 sm:pl-16  sm:text-start sm:dark:bg-black sm:dark:bg-opacity-70">
-        Account
-        </li>
-        </ul>
-        </nav> */}
       <h3 className="border-b border-border-light px-2 py-8 text-2xl font-bold text-gray-700 dark:border-border-dark dark:text-gray-300 sm:px-6">
         Account Settings
       </h3>
@@ -206,6 +230,29 @@ const Settings = () => {
           className="flex w-full flex-col gap-5 border-b border-border-light px-2 py-8 dark:border-border-dark"
         >
           <h4 className="text-lg font-medium">Change Password</h4>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="currentPassword" className="text-sm font-medium">
+              Current Password
+            </label>
+            <input
+              type="password"
+              id="currentPassword"
+              name="currentPassword"
+              value={password.currentPassword}
+              onChange={handleChange}
+              disabled={isDisabled}
+              autoComplete="current-password"
+              className={`w-full rounded-lg bg-gray-400 bg-opacity-30 px-4 py-3 text-sm font-medium text-home-text-light outline-none dark:bg-black dark:bg-opacity-70 dark:text-home-text-dark sm:w-1/2 ${
+                errors.currentPassword ? "border-2 border-error" : "border-0"
+              }`}
+            />
+            {errors.currentPassword && (
+              <p className="mt-1 text-sm text-error">
+                {errors.currentPassword}
+              </p>
+            )}
+          </div>
 
           <div className="flex flex-col gap-2">
             <label htmlFor="newPassword" className="text-sm font-medium">
@@ -289,22 +336,22 @@ const Settings = () => {
 
                   <input
                     type="password"
-                    id="currentPassword"
-                    name="currentPassword"
-                    value={password.currentPassword}
+                    id="deletePassword"
+                    name="deletePassword"
+                    value={password.deletePassword}
                     onChange={handleChange}
                     disabled={isDisabled}
                     autoComplete="current-password"
                     autoFocus
                     className={`w-full rounded-lg bg-gray-400 bg-opacity-30 px-4 py-3 text-sm font-medium text-home-text-light outline-none dark:bg-black dark:bg-opacity-70 dark:text-home-text-dark sm:w-1/2 ${
-                      errors.currentPassword
+                      errors.deletePassword
                         ? "border-2 border-error"
                         : "border-0"
                     }`}
                   />
-                  {errors.currentPassword && (
+                  {errors.deletePassword && (
                     <p className="mt-1 text-sm text-error">
-                      {errors.currentPassword}
+                      {errors.deletePassword}
                     </p>
                   )}
                   <div className="flex items-center justify-between">
