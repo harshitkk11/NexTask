@@ -149,6 +149,8 @@ const Settings = () => {
         confirmPassword: "",
         deletePassword: "Please enter your current password",
       });
+      setDeleteButton("Delete");
+      setIsDisabled(false);
       return;
     }
 
