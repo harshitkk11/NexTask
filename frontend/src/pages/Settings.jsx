@@ -350,7 +350,7 @@ const Settings = () => {
                     disabled={isDisabled}
                     autoComplete="current-password"
                     autoFocus
-                    className={`w-full rounded-lg bg-gray-400 bg-opacity-30 px-4 py-3 text-sm font-medium text-home-text-light outline-none dark:bg-black dark:bg-opacity-70 dark:text-home-text-dark sm:w-1/2 ${
+                    className={`w-full rounded-lg bg-gray-400 bg-opacity-30 px-4 py-3 text-sm font-medium text-home-text-light outline-none dark:bg-black dark:bg-opacity-70 dark:text-home-text-dark ${
                       errors.deletePassword
                         ? "border-2 border-error"
                         : "border-0"
@@ -371,6 +371,7 @@ const Settings = () => {
 
                     <button
                       onClick={handleDelete}
+                      disabled={isDisabled}
                       className="text-nowrap rounded-lg bg-error px-4 py-2 text-sm text-home-button-text-light dark:text-home-button-text-dark"
                     >
                       {deleteButton}
